@@ -29,6 +29,10 @@ function Botanical({ className = '' }: { className?: string }) {
   return <svg className={`botanical ${className}`} viewBox="0 0 220 420" aria-hidden="true"><path d="M118 418C114 302 128 212 91 91M101 141C61 126 39 96 30 59M107 175C145 151 165 121 172 83M115 231C66 218 41 181 25 145M120 282C160 254 186 215 191 170M116 337C77 324 53 299 38 266"/><path d="M90 91c-23-8-34-29-29-51 24 5 38 23 29 51Zm81-7c-5-24 9-43 34-50 5 22-8 43-34 50ZM30 59C8 50 0 31 5 10c22 6 32 25 25 49Zm-5 86c-20-4-35-20-35-42 22-1 38 15 35 42Zm166 25c-2-23 13-39 36-43 2 22-12 39-36 43ZM38 266c-21-1-37-16-40-37 22-3 40 12 40 37Z"/></svg>
 }
 
+function AmbientDetails() {
+  return <div className="ambient-details" aria-hidden="true"><i/><i/><i/><i/><i/><i/></div>
+}
+
 function Intro({ onStart, onComplete }: { onStart: () => void, onComplete: () => void }) {
   const [opening, setOpening] = useState(false)
   const open = () => { if (opening) return; setOpening(true); onStart(); window.setTimeout(onComplete, 3650) }
@@ -82,9 +86,9 @@ export default function App() {
 
   return <>
     {!entered && <Intro onStart={startOpening} onComplete={finishOpening}/>}<audio ref={audioRef} src={c.music.src} loop/>{entered && <Music audioRef={audioRef}/>} 
-    <main className={`site${opening ? ' opening-scene' : ''}${entered ? ' entered' : ''}`}>
+    <main className={`site${opening ? ' opening-scene' : ''}${entered ? ' entered' : ''}`}><AmbientDetails/>
       <section className="hero">
-        <div className="hero-image" style={{ backgroundImage: `url(${c.photos.hero})` }}/><div className="hero-veil"/><div className="hero-frame"/>
+        <div className="hero-backdrop"><div className="hero-image" style={{ backgroundImage: `url(${c.photos.hero})` }}/><div className="hero-veil"/><div className="hero-frame"/></div>
         <p className="hero-monogram">{initials}</p><p className="eyebrow">{c.text.heroEyebrow}</p>
         <h1><span>{bride}</span><i>&</i><span>{groom}</span></h1>
         <div className="hero-bottom"><p>{c.text.heroSubtitle}</p><div className="hero-date"><span/>{numericDate}<span/></div></div>
@@ -108,20 +112,20 @@ export default function App() {
         </div>
       </section>
 
-      <section className="date-reveal section-shell">
+      <section className="date-reveal section-shell"><Botanical className="date-branch"/>
         <p className="section-num">SAVE THE DATE</p><Reveal className="date-assembly"><span>{String(eventDate.getDate()).padStart(2,'0')}</span><i>/</i><span>{String(eventDate.getMonth()+1).padStart(2,'0')}</span><i>/</i><span>{eventDate.getFullYear()}</span></Reveal>
         <Reveal className="date-caption" delay={250}><p>{c.wedding.weekday}</p><span>{c.wedding.city}</span><p>{c.wedding.time}</p></Reveal>
       </section>
 
       <section className="countdown section-shell"><Reveal><p className="script">До нашей свадьбы</p><div className="count-grid">{units.map(([label,value],i)=><div key={label} style={{'--i':i} as React.CSSProperties}><strong>{String(value).padStart(2,'0')}</strong><span>{label}</span></div>)}</div></Reveal></section>
 
-      <section className="schedule section-shell"><div className="schedule-visual"><div className="schedule-photo"><img src={c.photos.couple1} alt="Детали свадебного дня" loading="lazy"/></div><p>the wedding day</p><span>{numericDate}</span></div>
+      <section className="schedule section-shell"><Reveal className="schedule-visual"><div className="schedule-photo"><img src={c.photos.couple1} alt="Детали свадебного дня" loading="lazy"/></div><p>the wedding day</p><span>{numericDate}</span></Reveal>
         <div className="schedule-content"><Reveal><p className="section-num">03 — ПРОГРАММА</p><h2>{c.text.scheduleTitleFirst}<br/><em>{c.text.scheduleTitleSecond}</em></h2></Reveal><div className="timeline">{c.schedule.map((item,i)=><Reveal key={`${item.time}-${item.title}`} delay={i*75}><article><span>{String(i+1).padStart(2,'0')}</span><time>{item.time}</time><h3>{item.title}</h3><i/></article></Reveal>)}</div></div>
       </section>
 
       <section className="venue"><div className="venue-image" style={{backgroundImage:`url(${c.photos.couple2})`}}/><div className="venue-shade"/><Botanical className="venue-branch"/><Reveal className="venue-card"><p className="section-num light">04 — МЕСТО</p><p className="script">будем ждать вас</p><h2>{c.location.name}</h2><div className="fine-rule"/><p>{c.location.address}</p><p>{prettyDate} · {c.wedding.time}</p><a className="map-link" href={c.location.twoGisUrl} target="_blank" rel="noopener noreferrer">Открыть в 2ГИС <span>↗</span></a></Reveal></section>
 
-      <section className="dress section-shell"><Reveal className="dress-title"><p className="section-num">05 — ДРЕСС-КОД</p><p className="script">details matter</p><h2>Палитра<br/><em>вечера</em></h2></Reveal><Reveal className="dress-info" delay={180}><p>{c.dressCode.text}</p><div className="swatches">{c.dressCode.colors.map((color,i)=><span key={color} style={{backgroundColor:color}}><i>{String(i+1).padStart(2,'0')}</i></span>)}</div><small>{c.dressCode.colorNames}</small></Reveal></section>
+      <section className="dress section-shell"><Botanical className="dress-branch"/><Reveal className="dress-title"><p className="section-num">05 — ДРЕСС-КОД</p><p className="script">details matter</p><h2>Палитра<br/><em>вечера</em></h2></Reveal><Reveal className="dress-info" delay={180}><p>{c.dressCode.text}</p><div className="swatches">{c.dressCode.colors.map((color,i)=><span key={color} style={{backgroundColor:color}}><i>{String(i+1).padStart(2,'0')}</i></span>)}</div><small>{c.dressCode.colorNames}</small></Reveal></section>
 
       <footer><div className="footer-photo" style={{backgroundImage:`url(${c.photos.hero})`}}/><div className="footer-overlay"/><div className="footer-frame"/><Reveal className="footer-content"><p className="section-num light">{c.text.footerTitle}</p><h2><span>{bride}</span><i>&</i><span>{groom}</span></h2><div className="footer-date">{prettyDate}</div><p>{c.text.footerMessage}</p><span className="footer-mark">{initials}</span></Reveal></footer>
     </main>
