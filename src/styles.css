@@ -42,6 +42,7 @@ footer{position:relative;min-height:100svh;color:#fff;display:grid;place-items:c
 @media(max-width:800px){
   .hero h1{width:calc(100% - 40px);max-width:390px;box-sizing:border-box;align-items:center;font-size:clamp(68px,21vw,96px);line-height:.62;letter-spacing:-.045em}
   .hero h1 span{display:block;max-width:100%;white-space:nowrap}
-  .site.opening-scene .hero h1{animation:mobileHeroTitleReveal .9s cubic-bezier(.2,.72,.2,1) 1.75s both}
+  .site.opening-scene .hero h1{z-index:101;animation:mobileHeroTitleReveal .9s cubic-bezier(.2,.72,.2,1) 1.75s both}
+  .site.opening-scene.entered .hero h1{z-index:auto}
 }
 @keyframes mobileHeroTitleReveal{from{opacity:0;filter:blur(3px);transform:translateY(12px) scale(.98)}to{opacity:1;filter:blur(0);transform:none}}
