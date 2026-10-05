@@ -41,7 +41,7 @@ function Intro({ onStart, onComplete }: { onStart: () => void, onComplete: () =>
       <div className="intro-monogram"><span>{bride[0]}</span><i>&</i><span>{groom[0]}</span></div>
       <p className="intro-names">{bride} <i>and</i> {groom}</p>
       <div className="intro-rule"><span/></div>
-      <button className="curtain-open" onClick={open} disabled={opening}><span>Открыть приглашение</span><i>↗</i></button>
+      <button className="curtain-open" onClick={open} disabled={opening}><span>Открыть приглашение</span><i className="curtain-arrow" aria-hidden="true" /></button>
       <p className="intro-date">{prettyDate}</p>
     </div>
   </div>
